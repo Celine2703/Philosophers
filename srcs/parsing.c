@@ -1,62 +1,57 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.c                                            :+:      :+:    :+:   */
+/*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmartin- <cmartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/28 10:45:17 by cmartin-          #+#    #+#             */
-/*   Updated: 2023/01/28 11:38:11 by cmartin-         ###   ########.fr       */
+/*   Created: 2023/01/28 12:28:05 by cmartin-          #+#    #+#             */
+/*   Updated: 2023/01/28 12:42:19 by cmartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <pthread.h>
+#include "philo.h"
 
-void *ft_philo(void *arg)
-{
-	
-	printf("Coucou ");
-	printf("Clement ");
-	printf("Cravero\n");
-	return (NULL);
-}
-
-void	ft_parsing(int argc, char **argv)
+int	ft_error(int argc, char **argv)
 {
 	if (argc != 5 && argc != 6)
 	{
 		printf("Error: Wrong number of arguments");
+		return (1);
 	}
 	else
 	{
 		if (ft_atoi(argv[1]) < 1)
+		{
 			printf("Error: Wrong number of philosophers");
+			return (1);
+		}
 		else if (ft_atoi(argv[2]) < 0 || ft_atoi(argv[3]) < 0 || ft_atoi(argv[4]) < 0)
+		{
 			printf("Error: Wrong time");
+			return (1);
+		}
 		else if (argc == 6 && ft_atoi(argv[5]) < 0)
 		{
 			printf("Error: Wrong number of meals");
+			return (1);
 		}
 	}
+	return (0);
 }
 
-int main(int argc, char **argv)
+int	ft_parsing(int argc, char **argv, t_data *data)
 {
-	int nb_philo;
-
-	nb_philo = ft_atoi(argv[1]);
-	
-	pthread_t thread;
-	pthread_create(&thread, NULL, &ft_philo, NULL);
-	sleep(5);
-	printf("Salut ");
-	printf("Celine ");
-	if (test == 0)
-	{
-		printf("Martin-Parisot\n");
-	}
-}
-
+	if (ft_error(argc, argv))
+		return (1);
+	data = malloc(sizeof(t_data));
+	data ->nb_philo = ft_atoi(argv[1]);
+	data ->time_die = ft_atoi(argv[2]);
+	data ->time_eat = ft_atoi(argv[3]);
+	data ->time_sleep = ft_atoi(argv[4]);
+	if (argc == 6)
+		data ->nb_meals = ft_atoi(argv[5]);
+	else
+		data ->nb_meals = 0;
+	return (0);
+} 
