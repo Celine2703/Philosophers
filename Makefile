@@ -3,6 +3,7 @@ SRCS	= 	philo.c\
 			ft_atoi.c\
 			ft_bzero.c\
 			init.c\
+			action.c\
 
 DIR_SRC = srcs/
 

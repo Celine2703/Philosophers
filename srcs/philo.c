@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmartin- <cmartin-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: celine <celine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 10:45:17 by cmartin-          #+#    #+#             */
-/*   Updated: 2023/01/28 14:40:110 by cmartin-         ###   ########.fr       */
+/*   Updated: 2023/01/30 14:03:09 by celine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,40 +15,9 @@
 //number_of_philosophers time_to_die time_to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]
 /*
 	espace chat :
-	tu valides la fonction ft_init_philo ?
-	et tu as une idee pour la fonction ft_init_mutex ? c'est quoi un mutex ?
+		il est où le chat aussi
 */
 
-void	*ft_philo(void *philo)
-{
-	while (1)
-	{
-		(void)philo;
-		printf("je suis le philo\n");
-		//prendre une fourchette
-		//manger
-		//poser une fourchette
-		//penser
-	}
-}
-
-/*
-void end_philo(......)
-{
-	int i;
-
-	...
-	while (i != ....)
-	{
-		pthread_join(...., NULL);
-		...
-		
-	}
-	
-	i = 0;
-	.....		
-}
-*/
 
 int	main(int argc, char **argv)
 {
@@ -65,4 +34,3 @@ int	main(int argc, char **argv)
 	//pthread_join(thread, NULL);
 	return (0);
 }
-

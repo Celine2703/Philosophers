@@ -54,4 +54,4 @@ int	ft_parsing(int argc, char **argv, t_data *data)
 	else
 		data ->nb_meals = 0;
 	return (0);
-} 
+}

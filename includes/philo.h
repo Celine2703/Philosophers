@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmartin- <cmartin-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: celine <celine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 12:00:06 by cmartin-          #+#    #+#             */
-/*   Updated: 2023/01/28 15:07:35 by cmartin-         ###   ########.fr       */
+/*   Updated: 2023/01/30 15:04:40 by celine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,4 @@ int		ft_error(int argc, char **argv);
 int		ft_parsing(int argc, char **argv, t_data *data);
 
 //philo
-void	*ft_philo(void *philo);
+void	*ft_philo(void *philos);

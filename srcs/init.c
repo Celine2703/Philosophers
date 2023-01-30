@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmartin- <cmartin-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: celine <celine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 15:02:38 by cmartin-          #+#    #+#             */
-/*   Updated: 2023/01/28 15:03:41 by cmartin-         ###   ########.fr       */
+/*   Updated: 2023/01/30 15:04:39 by celine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+//ajouter les index des forks dans la structure t_philo
 
 int	ft_init_philo(t_philo *philo, t_data *data) 
 {
