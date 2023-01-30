@@ -32,7 +32,7 @@ init de lfork et rfork dans init_philo (comment je fais pour avoir l'index de me
 										le philo 2 a pour index rfork 2 et lfork 1
 										le dernier philo a pour index rfork 0 et lfork 2
 										
-										
+								
 faire le main
 
 to do :
@@ -51,6 +51,12 @@ la fin du programme (si un philo meurt comment les autres philos sont au courant
 
 une fonction ft_usleep qui permet de faire une pause de x ms (pour le temps de manger et de dormir)
 	tout en verifiant regulierement si le programme doit s'arreter ou si le philo est mort
+
+verifier que les philos mangent au bon moment (si un philo mange et que le philo a sa droite mange aussi, ca ne marche pas)
+
+verifier que les philos meurent correctement (si un philo meurt, les autres doivent s'arreter) et au bon moment
+
+visualiseur pour debugger : https://nafuka11.github.io/philosophers-visualizer/
 
 */
 void	*ft_philo(void *philos)
@@ -74,6 +80,8 @@ void	*ft_philo(void *philos)
         pthread_mutex_unlock(&philo.mutex[philo.index_rfork]);
         printf("philo %d is sleeping\n", philo.id);
         usleep(philo.data ->time_sleep);
+        //si philo fait rien
+            printf("philo %d is thinking\n", philo.id);
 		//ft_taking_fork(philo);
 		//ft_eat(philo);
 		//ft_putting_fork(philo);

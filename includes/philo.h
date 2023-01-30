@@ -6,7 +6,7 @@
 /*   By: celine <celine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 12:00:06 by cmartin-          #+#    #+#             */
-/*   Updated: 2023/01/30 15:04:40 by celine           ###   ########.fr       */
+/*   Updated: 2023/01/30 15:52:25 by celine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ typedef struct s_philo
 	int				id;
 	int				index_lfork;
 	int				index_rfork;
-	int				eat;
 	int				times;
 	int				dead;
 	int				ate;
