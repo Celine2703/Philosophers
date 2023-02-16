@@ -6,7 +6,7 @@
 /*   By: cmartin- <cmartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 12:00:06 by cmartin-          #+#    #+#             */
-/*   Updated: 2023/02/16 16:37:38 by cmartin-         ###   ########.fr       */
+/*   Updated: 2023/02/16 17:38:42 by cmartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ typedef struct s_philo
 	int				id;
 	int				index_lfork;
 	int				index_rfork;
-	int				beggining_time;
-	int				last_meal_time;
+	long long		beggining_time;
+	long long		last_meal_time;
 	int				dead;
 	int				ate;
 	int				*dead_philo;
@@ -61,5 +61,5 @@ void	*ft_philo(void *philos);
 void end_philo(t_philo *philo);
 
 //time
-int	ft_get_time(void);
-int ft_get_time_diff(int beggining);
+long long	ft_get_time(void);
+long long	ft_get_time_diff(long long beggining);

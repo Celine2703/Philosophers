@@ -44,7 +44,7 @@ static void	ft_lfork(t_philo *philo)
 {
 	pthread_mutex_lock(&philo ->mutex[philo ->index_lfork]);
 	pthread_mutex_lock(philo ->print);
-	printf ("%d %d has taken a fork\n", ft_get_time_diff(philo ->beggining_time), philo ->id);
+	printf ("%lld %d has taken a fork\n", ft_get_time_diff(philo ->beggining_time), philo ->id);
 	pthread_mutex_unlock(philo ->print);
 }
 
@@ -52,7 +52,7 @@ static void	ft_rfork(t_philo *philo)
 {
 	pthread_mutex_lock(&philo ->mutex[philo ->index_rfork]);
 	pthread_mutex_lock(philo ->print);
-	printf ("%d %d has taken a fork\n", ft_get_time_diff(philo ->beggining_time), philo ->id);
+	printf ("%lld %d has taken a fork\n", ft_get_time_diff(philo ->beggining_time), philo ->id);
 	pthread_mutex_unlock(philo ->print);
 }
 
@@ -69,9 +69,10 @@ void	ft_eat(t_philo *philo)
 		ft_lfork(philo);
 	}
 	pthread_mutex_lock(philo ->print);
-	printf("%d %d is eating\n", ft_get_time_diff(philo ->beggining_time), philo ->id);
+	printf("%lld %d is eating\n", ft_get_time_diff(philo ->beggining_time), philo ->id);
 	pthread_mutex_unlock(philo ->print);
 	usleep(philo ->data ->time_eat);
+	philo ->last_meal_time = ft_get_time();
 	philo ->ate += 1;
 	pthread_mutex_unlock(&philo ->mutex[philo ->index_lfork]);
 	pthread_mutex_unlock(&philo ->mutex[philo ->index_rfork]);
@@ -84,17 +85,17 @@ void	*ft_philo(void *philos)
 	philo = *(t_philo*)philos;   // cast de void * en t_philo * puis dereferencement
 	//(void)philo;
 	philo.beggining_time = ft_get_time();
-	printf("beggining time = %d philo %d", philo.beggining_time, philo.id);
+	philo.last_meal_time = philo.beggining_time;
 	while (1)
 	{
 		ft_eat(&philo);
 		pthread_mutex_lock(philo.print);
-        printf("%d %d is sleeping\n", ft_get_time_diff(philo.beggining_time), philo.id);
+        printf("%lld %d is sleeping\n", ft_get_time_diff(philo.beggining_time), philo.id);
 		pthread_mutex_unlock(philo.print);
         usleep(philo.data ->time_sleep);
 		pthread_mutex_lock(philo.print);
         //si philo fait rien
-            printf("%d %d is thinking\n", ft_get_time_diff(philo.beggining_time), philo.id);
+            printf("%lld %d is thinking\n", ft_get_time_diff(philo.beggining_time), philo.id);
 		pthread_mutex_unlock(philo.print);
 		//ft_taking_fork(philo);
 		//ft_eat(philo);

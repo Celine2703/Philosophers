@@ -6,7 +6,7 @@
 /*   By: cmartin- <cmartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 12:28:05 by cmartin-          #+#    #+#             */
-/*   Updated: 2023/02/16 15:56:41 by cmartin-         ###   ########.fr       */
+/*   Updated: 2023/02/16 17:35:33 by cmartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	ft_parsing(int argc, char **argv, t_data *data)
 	if (ft_error(argc, argv))
 		return (1);
 	data ->nb_philo = ft_atoi(argv[1]);
-	data ->time_die = ft_atoi(argv[2]) * 1000;
+	data ->time_die = ft_atoi(argv[2]);
 	data ->time_eat = ft_atoi(argv[3]) * 1000;
 	data ->time_sleep = ft_atoi(argv[4]) * 1000;
 	if (argc == 6)

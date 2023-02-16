@@ -6,7 +6,7 @@
 /*   By: cmartin- <cmartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 16:04:26 by cmartin-          #+#    #+#             */
-/*   Updated: 2023/02/16 16:33:03 by cmartin-         ###   ########.fr       */
+/*   Updated: 2023/02/16 17:38:13 by cmartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,19 @@
 
 
 
-int	ft_get_time(void)
+long long	ft_get_time(void)
 {
 	struct timeval	tv;
-	int				time;
+	long long		time;
 
 	gettimeofday(&tv, NULL);
 	time = (tv.tv_sec * 1000) + (tv.tv_usec / 1000);
 	return (time);
 }
 
-int ft_get_time_diff(int beggining)
+long long ft_get_time_diff(long long beggining)
 {
-	int time;
+	long long time;
 
 	time = ft_get_time();
 	return (time - beggining);
