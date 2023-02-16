@@ -20,8 +20,6 @@
 to do :
 fonction qui permet de recuperer le timestamp (cad le temps depuis le debut du programme (ou le lancement des thread)en ms)
 
-securiser les affichage (avec mutex print?)
-
 verifier qu' il n'y a pas de deadlock
 
 verifier qu' il n'y a pas de data race (si deux thread peuvent acceder a la meme variable en meme temps donc pas proteger par un mutex) : 
@@ -41,32 +39,63 @@ verifier que les philos meurent correctement (si un philo meurt, les autres doiv
 visualiseur pour debugger : https://nafuka11.github.io/philosophers-visualizer/
 
 */
+
+static void	ft_lfork(t_philo *philo)
+{
+	pthread_mutex_lock(&philo ->mutex[philo ->index_lfork]);
+	pthread_mutex_lock(philo ->print);
+	printf ("%d %d has taken a fork\n", ft_get_time_diff(philo ->beggining_time), philo ->id);
+	pthread_mutex_unlock(philo ->print);
+}
+
+static void	ft_rfork(t_philo *philo)
+{
+	pthread_mutex_lock(&philo ->mutex[philo ->index_rfork]);
+	pthread_mutex_lock(philo ->print);
+	printf ("%d %d has taken a fork\n", ft_get_time_diff(philo ->beggining_time), philo ->id);
+	pthread_mutex_unlock(philo ->print);
+}
+
+void	ft_eat(t_philo *philo)
+{
+	if(philo ->id % 2 == 0)
+	{
+		ft_lfork(philo);
+		ft_rfork(philo);
+	}
+	else
+	{
+		ft_rfork(philo);
+		ft_lfork(philo);
+	}
+	pthread_mutex_lock(philo ->print);
+	printf("%d %d is eating\n", ft_get_time_diff(philo ->beggining_time), philo ->id);
+	pthread_mutex_unlock(philo ->print);
+	usleep(philo ->data ->time_eat);
+	philo ->ate += 1;
+	pthread_mutex_unlock(&philo ->mutex[philo ->index_lfork]);
+	pthread_mutex_unlock(&philo ->mutex[philo ->index_rfork]);
+}
+
 void	*ft_philo(void *philos)
 {
 	t_philo	philo;
     
 	philo = *(t_philo*)philos;   // cast de void * en t_philo * puis dereferencement
-	(void )philo;
+	//(void)philo;
+	philo.beggining_time = ft_get_time();
+	printf("beggining time = %d philo %d", philo.beggining_time, philo.id);
 	while (1)
 	{
-		printf("je suis le philo %d\n", philo.id);
-
-		printf("philo %d is hungry\n", philo.id);
-		printf("index_lfork = %d\n", philo.index_lfork);
-		printf("index_rfork = %d\n", philo.index_rfork);
-		pthread_mutex_lock(&philo.mutex[philo.index_lfork]);
-		printf ("philo %d take the left fork\n", philo.id);
-        pthread_mutex_lock(&philo.mutex[philo.index_rfork]);
-		printf ("philo %d take the right fork\n", philo.id);
-        printf("philo %d is eating\n", philo.id);
-        usleep(philo.data ->time_eat);
-        philo.ate += 1;
-        pthread_mutex_unlock(&philo.mutex[philo.index_lfork]);
-        pthread_mutex_unlock(&philo.mutex[philo.index_rfork]);
-        printf("philo %d is sleeping\n", philo.id);
+		ft_eat(&philo);
+		pthread_mutex_lock(philo.print);
+        printf("%d %d is sleeping\n", ft_get_time_diff(philo.beggining_time), philo.id);
+		pthread_mutex_unlock(philo.print);
         usleep(philo.data ->time_sleep);
+		pthread_mutex_lock(philo.print);
         //si philo fait rien
-            printf("philo %d is thinking\n", philo.id);
+            printf("%d %d is thinking\n", ft_get_time_diff(philo.beggining_time), philo.id);
+		pthread_mutex_unlock(philo.print);
 		//ft_taking_fork(philo);
 		//ft_eat(philo);
 		//ft_putting_fork(philo);

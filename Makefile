@@ -4,6 +4,7 @@ SRCS	= 	philo.c\
 			ft_bzero.c\
 			init.c\
 			action.c\
+			time.c\
 
 DIR_SRC = srcs/
 
@@ -13,7 +14,7 @@ DIR_OBJ = srcs/objs/
 
 OBJS= $(addprefix $(DIR_OBJ), $(OBJ))
 
-DEP	= ${SRCS:.cpp=.d}
+DEP	= ${SRCS:.c=.d}
 
 DEPS = $(addprefix $(DIR_OBJ), $(DEP))
 

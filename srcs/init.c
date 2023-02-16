@@ -6,7 +6,7 @@
 /*   By: cmartin- <cmartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 15:02:38 by cmartin-          #+#    #+#             */
-/*   Updated: 2023/02/16 15:07:31 by cmartin-         ###   ########.fr       */
+/*   Updated: 2023/02/16 16:44:53 by cmartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int	ft_init_philo(t_philo **philo, t_data *data)
 	int i;
 	
 	i = 0;
-	printf("datanbphilo = %d", data->nb_philo);
 	*philo = malloc(sizeof(t_philo) * data->nb_philo);
 	if (!*philo)
 		return (1);
