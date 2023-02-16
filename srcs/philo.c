@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: celine <celine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cmartin- <cmartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 10:45:17 by cmartin-          #+#    #+#             */
-/*   Updated: 2023/01/30 14:03:09 by celine           ###   ########.fr       */
+/*   Updated: 2023/02/16 14:51:45 by cmartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,21 @@
 int	main(int argc, char **argv)
 {
 	t_data data;
+	t_philo *philo;
 
+	philo = NULL;
 	if (ft_parsing(argc, argv, &data))
 		return (1);
+	ft_init_philo(&philo, &data);
+	ft_init_mutex(philo);
+	ft_init_thread(philo);
+	
 	//le programme se fait en 3 parties
 	//1. init philo, init mutex, init thread
 	//2. boucle de vie des philo
 	//3. fin du programme
 	
-	sleep(5);
+	end_philo(philo);
 	//pthread_join(thread, NULL);
 	return (0);
 }

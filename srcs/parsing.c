@@ -6,7 +6,7 @@
 /*   By: cmartin- <cmartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 12:28:05 by cmartin-          #+#    #+#             */
-/*   Updated: 2023/01/28 12:42:19 by cmartin-         ###   ########.fr       */
+/*   Updated: 2023/02/16 14:57:30 by cmartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ int	ft_parsing(int argc, char **argv, t_data *data)
 {
 	if (ft_error(argc, argv))
 		return (1);
-	data = malloc(sizeof(t_data));
 	data ->nb_philo = ft_atoi(argv[1]);
 	data ->time_die = ft_atoi(argv[2]);
 	data ->time_eat = ft_atoi(argv[3]);

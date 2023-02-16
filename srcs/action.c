@@ -13,27 +13,9 @@
 #include "philo.h"
 /*
 
-//sur ton init tu n'as pas donne les valeurs index de tes forks (lfork et rfork)
 // si le mutex est deja lock, le thread s'arrete jusqu'a ce qu'il soit debloque (donc il attend) 
 // donc ca peut generer des deadlock dans certains cas (si un thread attend un mutex qui est lock par un autre thread qui attend un mutex lock par le premier thread)
 // mais on verra ca apres
-
-la t'as la routine de base de tes philos, tu peux commencer des test pour voir si ca marche
-
-to do before test :
-
-init de lfork et rfork dans init_philo (comment je fais pour avoir l'index de mes forks? genre si je suis le philo 1, mon lfork est le mutex 0 et mon rfork est le mutex 1?)
-										c'est ca : mais attention pour le dernier philo(ca change quoi? tu) et aussi si un seul philo )
-										attend c'est pas ca :
-										tu as un tableau de mutex du nombres de philos
-										
-										prenons le cas de 3 philos je rappelle que les philos sont en rond:
-										le philo 1 a pour index rfork 1 lfork 0 (par exemple)
-										le philo 2 a pour index rfork 2 et lfork 1
-										le dernier philo a pour index rfork 0 et lfork 2
-										
-								
-faire le main
 
 to do :
 fonction qui permet de recuperer le timestamp (cad le temps depuis le debut du programme (ou le lancement des thread)en ms)
@@ -69,6 +51,9 @@ void	*ft_philo(void *philos)
 	{
 		printf("je suis le philo %d\n", philo.id);
 
+		printf("philo %d is hungry\n", philo.id);
+		printf("index_lfork = %d\n", philo.index_lfork);
+		printf("index_rfork = %d\n", philo.index_rfork);
 		pthread_mutex_lock(&philo.mutex[philo.index_lfork]);
 		printf ("philo %d take the left fork\n", philo.id);
         pthread_mutex_lock(&philo.mutex[philo.index_rfork]);
@@ -94,20 +79,23 @@ void	*ft_philo(void *philos)
 	}
 }
 
-/*
-void end_philo(......)
+void end_philo(t_philo *philo)
 {
 	int i;
 
-	...
-	while (i != ....)
-	{
-		pthread_join(...., NULL);
-		...
-		
-	}
-	
 	i = 0;
-	.....		
+	while (i < philo->data->nb_philo)
+	{
+		pthread_join(philo[i].thread, NULL);
+		i++;
+	}
+	i = 0;
+	while (i < philo->data->nb_philo)
+	{
+		pthread_mutex_destroy(&philo->mutex[i]);
+		i++;
+	}
+	pthread_mutex_destroy(philo->print);
+	free(philo->mutex);
+	free(philo);
 }
-*/

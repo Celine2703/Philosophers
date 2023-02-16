@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: celine <celine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cmartin- <cmartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 12:00:06 by cmartin-          #+#    #+#             */
-/*   Updated: 2023/01/30 15:52:25 by celine           ###   ########.fr       */
+/*   Updated: 2023/02/16 14:53:23 by cmartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ typedef struct s_philo
 	int				times;
 	int				dead;
 	int				ate;
-	int				*forks;
 	int				*dead_philo;
 	pthread_mutex_t	*mutex;
 	pthread_mutex_t	*print;
@@ -46,7 +45,7 @@ int		ft_atoi(const char *str);
 void	ft_bzero(void *s, size_t n);
 
 //init
-int		ft_init_philo(t_philo *philo, t_data *data);
+int		ft_init_philo(t_philo **philo, t_data *data);
 int		ft_init_mutex(t_philo *philo);
 int		ft_init_thread(t_philo *philo);
 
@@ -54,5 +53,6 @@ int		ft_init_thread(t_philo *philo);
 int		ft_error(int argc, char **argv);
 int		ft_parsing(int argc, char **argv, t_data *data);
 
-//philo
+//action
 void	*ft_philo(void *philos);
+void end_philo(t_philo *philo);

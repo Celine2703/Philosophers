@@ -3,30 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: celine <celine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: cmartin- <cmartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 15:02:38 by cmartin-          #+#    #+#             */
-/*   Updated: 2023/01/30 15:04:39 by celine           ###   ########.fr       */
+/*   Updated: 2023/02/16 15:07:31 by cmartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-//ajouter les index des forks dans la structure t_philo
-
-int	ft_init_philo(t_philo *philo, t_data *data) 
+int	ft_init_philo(t_philo **philo, t_data *data) 
 {
 	int i;
 	
 	i = 0;
-	philo = malloc(sizeof(t_philo) * data->nb_philo);
-	if (!philo)
+	printf("datanbphilo = %d", data->nb_philo);
+	*philo = malloc(sizeof(t_philo) * data->nb_philo);
+	if (!*philo)
 		return (1);
-	ft_bzero(philo, sizeof(t_philo) * data->nb_philo); //initialise le tableau et les structures a 0 
+	ft_bzero(*philo, sizeof(t_philo) * data->nb_philo);
 	while (i < data->nb_philo)
 	{
-		philo[i].id = i;
-		philo[i].data = data;
+		(*philo)[i].id = i;
+		(*philo)[i].index_lfork = i;
+		(*philo)[i].index_rfork = (i + 1) % data->nb_philo;
+		(*philo)[i].data = data;
 		i++;
 	}
 	return (0);
@@ -45,6 +46,8 @@ int	ft_init_mutex(t_philo *philo)
 	while (i < philo ->data->nb_philo)
 	{
 		pthread_mutex_init(&(philo ->mutex[i]), NULL);
+		philo[i].mutex = philo ->mutex;
+		philo[i].print = philo ->print;
 		i++;
 	}
 	return (0);
@@ -57,7 +60,7 @@ int	ft_init_thread(t_philo *philo)
 	i = 0;
 	while (i < philo ->data->nb_philo)
 	{
-		if (pthread_create(&(philo ->thread), NULL, &ft_philo, NULL))
+		if (pthread_create(&(philo[i].thread), NULL, &ft_philo, philo + i))
 			return (1);
 		i++;
 	}
