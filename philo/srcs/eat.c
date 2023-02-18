@@ -14,13 +14,11 @@
 /*
 
 to do :
-verifier qu' il n'y a pas de data race (si deux thread peuvent acceder a la meme variable en meme temps donc pas proteger par un mutex) : 
 	valgrind --tool=helgrind et fsanitize=thread
 
 la fin du programme (si un philo meurt comment les autres philos sont au courant?) 
 		mais egalement comment fermer proprement les mutex et les threads
-		il y a plusieurs solutions pour detecter les morts on en reparlera quand tu auras fait les autres trucs
-
+		
 une fonction ft_usleep qui permet de faire une pause de x ms (pour le temps de manger et de dormir)
 	tout en verifiant regulierement si le programme doit s'arreter ou si le philo est mort
 
@@ -91,7 +89,7 @@ void	ft_eat(t_philo *philo)
 	philo ->last_meal_time = ft_get_time();
 	pthread_mutex_unlock(&philo ->last_meal_mutex);
 	philo ->ate += 1;
-	usleep(philo ->data ->time_eat);
+	ft_usleep(philo, philo ->data ->time_eat);
 	pthread_mutex_unlock(&philo ->mutex[philo ->index_lfork]);
 	pthread_mutex_unlock(&philo ->mutex[philo ->index_rfork]);
 }

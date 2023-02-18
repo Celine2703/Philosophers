@@ -6,7 +6,7 @@
 /*   By: cmartin- <cmartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 10:45:17 by cmartin-          #+#    #+#             */
-/*   Updated: 2023/02/18 15:45:07 by cmartin-         ###   ########.fr       */
+/*   Updated: 2023/02/18 16:22:36 by cmartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,6 @@ void	*ft_philo(void *philos)
 	t_philo	*philo;
 
 	philo = (t_philo *)philos;
-	philo ->beggining_time = ft_get_time();
-	pthread_mutex_lock(&(philo ->last_meal_mutex));
-	philo ->last_meal_time = philo ->beggining_time;
-	pthread_mutex_unlock(&(philo ->last_meal_mutex));
 	while (ft_check_death(philo) == 0)
 	{
 		ft_eat(philo);
@@ -52,13 +48,14 @@ void	*ft_philo(void *philos)
 		printf("%lld %d is sleeping\n",
 			ft_get_time_diff(philo ->beggining_time), philo ->id);
 		pthread_mutex_unlock(philo ->print);
-		usleep(philo ->data ->time_sleep);
+		ft_usleep(philo, philo ->data ->time_sleep);
 		if (ft_check_death(philo))
 			return (NULL);
 		pthread_mutex_lock(philo ->print);
 		printf("%lld %d is thinking\n", //si fait rien
 			ft_get_time_diff(philo ->beggining_time), philo ->id);
 		pthread_mutex_unlock(philo ->print);
+		usleep(100);
 	}
 	return (NULL);
 }

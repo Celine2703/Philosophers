@@ -6,7 +6,7 @@
 /*   By: cmartin- <cmartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 15:02:38 by cmartin-          #+#    #+#             */
-/*   Updated: 2023/02/18 14:00:33 by cmartin-         ###   ########.fr       */
+/*   Updated: 2023/02/18 16:19:38 by cmartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,14 @@ int	ft_init_mutex(t_philo *philo)
 int	ft_init_thread(t_philo *philo)
 {
 	int	i;
+	long long	beggining;
 
 	i = 0;
+	beggining = ft_get_time();
 	while (i < philo ->data->nb_philo)
 	{
+		philo[i].beggining_time = beggining;
+		philo[i].last_meal_time = beggining;
 		if (pthread_create(&(philo[i].thread), NULL, &ft_philo, philo + i))
 			return (1);
 		i++;

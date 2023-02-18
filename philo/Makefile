@@ -3,8 +3,9 @@ SRCS	= 	philo.c\
 			ft_atoi.c\
 			ft_bzero.c\
 			init.c\
-			action.c\
+			eat.c\
 			time.c\
+			death.c\
 
 DIR_SRC = srcs/
 

@@ -6,7 +6,7 @@
 /*   By: cmartin- <cmartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 12:00:06 by cmartin-          #+#    #+#             */
-/*   Updated: 2023/02/18 15:47:02 by cmartin-         ###   ########.fr       */
+/*   Updated: 2023/02/18 16:07:59 by cmartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ long long	ft_check_meal(t_philo *philo);
 void		ft_eat(t_philo *philo);
 
 //time
+void		ft_usleep(t_philo *philo, int time);
 long long	ft_get_time(void);
 long long	ft_get_time_diff(long long beggining);
 
