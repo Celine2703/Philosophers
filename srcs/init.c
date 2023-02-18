@@ -6,16 +6,16 @@
 /*   By: cmartin- <cmartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 15:02:38 by cmartin-          #+#    #+#             */
-/*   Updated: 2023/02/16 16:44:53 by cmartin-         ###   ########.fr       */
+/*   Updated: 2023/02/18 14:00:33 by cmartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	ft_init_philo(t_philo **philo, t_data *data) 
+int	ft_init_philo(t_philo **philo, t_data *data)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
 	*philo = malloc(sizeof(t_philo) * data->nb_philo);
 	if (!*philo)
@@ -34,7 +34,7 @@ int	ft_init_philo(t_philo **philo, t_data *data)
 
 int	ft_init_mutex(t_philo *philo)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	philo ->mutex = malloc(sizeof(pthread_mutex_t) * philo ->data->nb_philo);
@@ -45,8 +45,11 @@ int	ft_init_mutex(t_philo *philo)
 	while (i < philo ->data->nb_philo)
 	{
 		pthread_mutex_init(&(philo ->mutex[i]), NULL);
+		pthread_mutex_init(&(philo[i].dead_mutex), NULL);
+		pthread_mutex_init(&(philo[i].last_meal_mutex), NULL);
 		philo[i].mutex = philo ->mutex;
 		philo[i].print = philo ->print;
+		philo[i].dead = 0;
 		i++;
 	}
 	return (0);
@@ -54,7 +57,7 @@ int	ft_init_mutex(t_philo *philo)
 
 int	ft_init_thread(t_philo *philo)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < philo ->data->nb_philo)

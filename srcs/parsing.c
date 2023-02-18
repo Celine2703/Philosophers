@@ -6,7 +6,7 @@
 /*   By: cmartin- <cmartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 12:28:05 by cmartin-          #+#    #+#             */
-/*   Updated: 2023/02/16 17:35:33 by cmartin-         ###   ########.fr       */
+/*   Updated: 2023/02/18 12:30:43 by cmartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ int	ft_error(int argc, char **argv)
 			printf("Error: Wrong number of philosophers");
 			return (1);
 		}
-		else if (ft_atoi(argv[2]) < 0 || ft_atoi(argv[3]) < 0 || ft_atoi(argv[4]) < 0)
+		else if (ft_atoi(argv[2]) < 0
+			|| ft_atoi(argv[3]) < 0 || ft_atoi(argv[4]) < 0)
 		{
 			printf("Error: Wrong time");
 			return (1);

@@ -13,15 +13,7 @@
 #include "philo.h"
 /*
 
-// si le mutex est deja lock, le thread s'arrete jusqu'a ce qu'il soit debloque (donc il attend) 
-// donc ca peut generer des deadlock dans certains cas (si un thread attend un mutex qui est lock par un autre thread qui attend un mutex lock par le premier thread)
-// mais on verra ca apres
-
 to do :
-fonction qui permet de recuperer le timestamp (cad le temps depuis le debut du programme (ou le lancement des thread)en ms)
-
-verifier qu' il n'y a pas de deadlock
-
 verifier qu' il n'y a pas de data race (si deux thread peuvent acceder a la meme variable en meme temps donc pas proteger par un mutex) : 
 	valgrind --tool=helgrind et fsanitize=thread
 
@@ -43,22 +35,28 @@ visualiseur pour debugger : https://nafuka11.github.io/philosophers-visualizer/
 static void	ft_lfork(t_philo *philo)
 {
 	pthread_mutex_lock(&philo ->mutex[philo ->index_lfork]);
+	if (ft_check_death(philo))
+		return ;
 	pthread_mutex_lock(philo ->print);
-	printf ("%lld %d has taken a fork\n", ft_get_time_diff(philo ->beggining_time), philo ->id);
+	printf ("%lld %d has taken a fork\n",
+		ft_get_time_diff(philo ->beggining_time), philo ->id);
 	pthread_mutex_unlock(philo ->print);
 }
 
 static void	ft_rfork(t_philo *philo)
 {
 	pthread_mutex_lock(&philo ->mutex[philo ->index_rfork]);
+	if (ft_check_death(philo))
+		return ;
 	pthread_mutex_lock(philo ->print);
-	printf ("%lld %d has taken a fork\n", ft_get_time_diff(philo ->beggining_time), philo ->id);
+	printf ("%lld %d has taken a fork\n",
+		ft_get_time_diff(philo ->beggining_time), philo ->id);
 	pthread_mutex_unlock(philo ->print);
 }
 
 void	ft_eat(t_philo *philo)
 {
-	if(philo ->id % 2 == 0)
+	if (philo ->id % 2 == 0)
 	{
 		ft_lfork(philo);
 		ft_rfork(philo);
@@ -68,50 +66,53 @@ void	ft_eat(t_philo *philo)
 		ft_rfork(philo);
 		ft_lfork(philo);
 	}
+	if (ft_check_death(philo))
+		return ;
 	pthread_mutex_lock(philo ->print);
-	printf("%lld %d is eating\n", ft_get_time_diff(philo ->beggining_time), philo ->id);
+	printf("%lld %d is eating\n",
+		ft_get_time_diff(philo ->beggining_time), philo ->id);
 	pthread_mutex_unlock(philo ->print);
-	usleep(philo ->data ->time_eat);
+	pthread_mutex_lock(&philo ->last_meal_mutex);
 	philo ->last_meal_time = ft_get_time();
+	pthread_mutex_unlock(&philo ->last_meal_mutex);
 	philo ->ate += 1;
+	usleep(philo ->data ->time_eat);
 	pthread_mutex_unlock(&philo ->mutex[philo ->index_lfork]);
 	pthread_mutex_unlock(&philo ->mutex[philo ->index_rfork]);
 }
 
 void	*ft_philo(void *philos)
 {
-	t_philo	philo;
-    
-	philo = *(t_philo*)philos;   // cast de void * en t_philo * puis dereferencement
-	//(void)philo;
-	philo.beggining_time = ft_get_time();
-	philo.last_meal_time = philo.beggining_time;
-	while (1)
+	t_philo	*philo;
+
+	philo = (t_philo *)philos;
+	philo ->beggining_time = ft_get_time();
+	pthread_mutex_lock(&(philo ->last_meal_mutex));
+	philo ->last_meal_time = philo ->beggining_time;
+	pthread_mutex_unlock(&(philo ->last_meal_mutex));
+	while (philo ->dead == 0)
 	{
-		ft_eat(&philo);
-		pthread_mutex_lock(philo.print);
-        printf("%lld %d is sleeping\n", ft_get_time_diff(philo.beggining_time), philo.id);
-		pthread_mutex_unlock(philo.print);
-        usleep(philo.data ->time_sleep);
-		pthread_mutex_lock(philo.print);
-        //si philo fait rien
-            printf("%lld %d is thinking\n", ft_get_time_diff(philo.beggining_time), philo.id);
-		pthread_mutex_unlock(philo.print);
-		//ft_taking_fork(philo);
-		//ft_eat(philo);
-		//ft_putting_fork(philo);
-		//ft_think(philo);
-		//prendre une fourchette
-		//manger
-		//poser une fourchette
-		//penser
-		
+		ft_eat(philo);
+		if (ft_check_death(philo))
+			return (NULL);
+		pthread_mutex_lock(philo ->print);
+		printf("%lld %d is sleeping\n",
+			ft_get_time_diff(philo ->beggining_time), philo ->id);
+		pthread_mutex_unlock(philo ->print);
+		usleep(philo ->data ->time_sleep);
+		if (ft_check_death(philo))
+			return (NULL);
+		pthread_mutex_lock(philo ->print);
+		printf("%lld %d is thinking\n", //si fait rien
+			ft_get_time_diff(philo ->beggining_time), philo ->id);
+		pthread_mutex_unlock(philo ->print);
 	}
+	return (NULL);
 }
 
-void end_philo(t_philo *philo)
+void	end_philo(t_philo *philo)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < philo->data->nb_philo)
@@ -126,6 +127,7 @@ void end_philo(t_philo *philo)
 		i++;
 	}
 	pthread_mutex_destroy(philo->print);
+	free(philo->print);
 	free(philo->mutex);
 	free(philo);
 }

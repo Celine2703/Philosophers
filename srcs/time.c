@@ -6,13 +6,11 @@
 /*   By: cmartin- <cmartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 16:04:26 by cmartin-          #+#    #+#             */
-/*   Updated: 2023/02/16 17:38:13 by cmartin-         ###   ########.fr       */
+/*   Updated: 2023/02/18 12:30:10 by cmartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-
 
 long long	ft_get_time(void)
 {
@@ -24,9 +22,9 @@ long long	ft_get_time(void)
 	return (time);
 }
 
-long long ft_get_time_diff(long long beggining)
+long long	ft_get_time_diff(long long beggining)
 {
-	long long time;
+	long long	time;
 
 	time = ft_get_time();
 	return (time - beggining);
