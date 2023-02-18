@@ -32,6 +32,17 @@ visualiseur pour debugger : https://nafuka11.github.io/philosophers-visualizer/
 
 */
 
+long long	ft_check_meal(t_philo *philo)
+{
+	long long	i;
+
+	i = 0;
+	pthread_mutex_lock(&philo->last_meal_mutex);
+	i = philo->last_meal_time;
+	pthread_mutex_unlock(&philo->last_meal_mutex);
+	return (i);
+}
+
 static void	ft_lfork(t_philo *philo)
 {
 	pthread_mutex_lock(&philo ->mutex[philo ->index_lfork]);
@@ -85,53 +96,3 @@ void	ft_eat(t_philo *philo)
 	pthread_mutex_unlock(&philo ->mutex[philo ->index_rfork]);
 }
 
-void	*ft_philo(void *philos)
-{
-	t_philo	*philo;
-
-	philo = (t_philo *)philos;
-	philo ->beggining_time = ft_get_time();
-	pthread_mutex_lock(&(philo ->last_meal_mutex));
-	philo ->last_meal_time = philo ->beggining_time;
-	pthread_mutex_unlock(&(philo ->last_meal_mutex));
-	while (ft_check_death(philo) == 0)
-	{
-		ft_eat(philo);
-		if (ft_check_death(philo))
-			return (NULL);
-		pthread_mutex_lock(philo ->print);
-		printf("%lld %d is sleeping\n",
-			ft_get_time_diff(philo ->beggining_time), philo ->id);
-		pthread_mutex_unlock(philo ->print);
-		usleep(philo ->data ->time_sleep);
-		if (ft_check_death(philo))
-			return (NULL);
-		pthread_mutex_lock(philo ->print);
-		printf("%lld %d is thinking\n", //si fait rien
-			ft_get_time_diff(philo ->beggining_time), philo ->id);
-		pthread_mutex_unlock(philo ->print);
-	}
-	return (NULL);
-}
-
-void	end_philo(t_philo *philo)
-{
-	int	i;
-
-	i = 0;
-	while (i < philo->data->nb_philo)
-	{
-		pthread_join(philo[i].thread, NULL);
-		i++;
-	}
-	i = 0;
-	while (i < philo->data->nb_philo)
-	{
-		pthread_mutex_destroy(&philo->mutex[i]);
-		i++;
-	}
-	pthread_mutex_destroy(philo->print);
-	free(philo->print);
-	free(philo->mutex);
-	free(philo);
-}

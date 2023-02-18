@@ -6,7 +6,7 @@
 /*   By: cmartin- <cmartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 12:00:06 by cmartin-          #+#    #+#             */
-/*   Updated: 2023/02/18 14:00:05 by cmartin-         ###   ########.fr       */
+/*   Updated: 2023/02/18 15:47:02 by cmartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,18 +57,21 @@ int			ft_init_thread(t_philo *philo);
 int			ft_error(int argc, char **argv);
 int			ft_parsing(int argc, char **argv, t_data *data);
 
-//action
+//eat
+long long	ft_check_meal(t_philo *philo);
 void		ft_eat(t_philo *philo);
-void		*ft_philo(void *philos);
-void		end_philo(t_philo *philo);
 
 //time
 long long	ft_get_time(void);
 long long	ft_get_time_diff(long long beggining);
 
-//philo
+//death
 int			ft_check_death(t_philo *philo);
 void		ft_knowing_death(t_philo *philo);
 void		ft_death(t_philo *philo);
+
+//philo
+void	end_philo(t_philo *philo);
+void	*ft_philo(void *philos);
 
 #endif

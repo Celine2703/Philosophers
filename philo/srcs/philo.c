@@ -6,71 +6,62 @@
 /*   By: cmartin- <cmartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 10:45:17 by cmartin-          #+#    #+#             */
-/*   Updated: 2023/02/18 15:10:00 by cmartin-         ###   ########.fr       */
+/*   Updated: 2023/02/18 15:45:07 by cmartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-long long	ft_check_meal(t_philo *philo)
-{
-	long long	i;
-
-	i = 0;
-	pthread_mutex_lock(&philo->last_meal_mutex);
-	i = philo->last_meal_time;
-	pthread_mutex_unlock(&philo->last_meal_mutex);
-	return (i);
-}
-
-int	ft_check_death(t_philo *philo)
+void	end_philo(t_philo *philo)
 {
 	int	i;
 
 	i = 0;
-	pthread_mutex_lock(&philo->dead_mutex);
-	i = philo->dead;
-	pthread_mutex_unlock(&philo->dead_mutex);
-	return (i);
-}
-
-void	ft_knowing_death(t_philo *philo)
-{
-	int i;
-
-	i = 0;
-	while(i < philo->data->nb_philo)
+	while (i < philo->data->nb_philo)
 	{
-		pthread_mutex_lock(&philo[i].dead_mutex);
-		philo[i].dead = 1;
-		pthread_mutex_unlock(&philo[i].dead_mutex);
+		pthread_join(philo[i].thread, NULL);
 		i++;
 	}
-}
-
-void	ft_death(t_philo *philo)
-{
-	int i;
-
-	while(1)
+	i = 0;
+	while (i < philo->data->nb_philo)
 	{
-		i = 0;
-		while(i < philo->data->nb_philo)
-		{
-			//printf("time %lld last meal %lld , time to die %d\n", ft_get_time(), philo[i].last_meal_time, philo[i].data->time_die);
-			if (ft_get_time() - ft_check_meal(&philo[i]) > philo[i].data->time_die)
-			{
-				pthread_mutex_lock(philo[i].print);
-				printf("%lld %d died\n", ft_get_time_diff(philo[i].beggining_time), philo[i].id);
-				pthread_mutex_unlock(philo[i].print);
-				ft_knowing_death(philo);
-				return;
-			}
-			i++;
-		}
+		pthread_mutex_destroy(&philo->mutex[i]);
+		i++;
 	}
+	pthread_mutex_destroy(philo->print);
+	free(philo->print);
+	free(philo->mutex);
+	free(philo);
 }
 
+void	*ft_philo(void *philos)
+{
+	t_philo	*philo;
+
+	philo = (t_philo *)philos;
+	philo ->beggining_time = ft_get_time();
+	pthread_mutex_lock(&(philo ->last_meal_mutex));
+	philo ->last_meal_time = philo ->beggining_time;
+	pthread_mutex_unlock(&(philo ->last_meal_mutex));
+	while (ft_check_death(philo) == 0)
+	{
+		ft_eat(philo);
+		if (ft_check_death(philo))
+			return (NULL);
+		pthread_mutex_lock(philo ->print);
+		printf("%lld %d is sleeping\n",
+			ft_get_time_diff(philo ->beggining_time), philo ->id);
+		pthread_mutex_unlock(philo ->print);
+		usleep(philo ->data ->time_sleep);
+		if (ft_check_death(philo))
+			return (NULL);
+		pthread_mutex_lock(philo ->print);
+		printf("%lld %d is thinking\n", //si fait rien
+			ft_get_time_diff(philo ->beggining_time), philo ->id);
+		pthread_mutex_unlock(philo ->print);
+	}
+	return (NULL);
+}
 
 int	main(int argc, char **argv)
 {
