@@ -67,7 +67,11 @@ void	ft_eat(t_philo *philo)
 		ft_lfork(philo);
 	}
 	if (ft_check_death(philo))
+	{
+		pthread_mutex_unlock(&philo ->mutex[philo ->index_lfork]);
+		pthread_mutex_unlock(&philo ->mutex[philo ->index_rfork]);
 		return ;
+	}
 	pthread_mutex_lock(philo ->print);
 	printf("%lld %d is eating\n",
 		ft_get_time_diff(philo ->beggining_time), philo ->id);
@@ -90,7 +94,7 @@ void	*ft_philo(void *philos)
 	pthread_mutex_lock(&(philo ->last_meal_mutex));
 	philo ->last_meal_time = philo ->beggining_time;
 	pthread_mutex_unlock(&(philo ->last_meal_mutex));
-	while (philo ->dead == 0)
+	while (ft_check_death(philo) == 0)
 	{
 		ft_eat(philo);
 		if (ft_check_death(philo))

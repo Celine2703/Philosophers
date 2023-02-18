@@ -6,7 +6,7 @@
 /*   By: cmartin- <cmartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 10:45:17 by cmartin-          #+#    #+#             */
-/*   Updated: 2023/02/18 14:02:37 by cmartin-         ###   ########.fr       */
+/*   Updated: 2023/02/18 15:10:00 by cmartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,9 @@ void	ft_knowing_death(t_philo *philo)
 	while(i < philo->data->nb_philo)
 	{
 		pthread_mutex_lock(&philo[i].dead_mutex);
-		philo[i++].dead = 1;
+		philo[i].dead = 1;
 		pthread_mutex_unlock(&philo[i].dead_mutex);
+		i++;
 	}
 }
 
