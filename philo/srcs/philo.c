@@ -6,7 +6,7 @@
 /*   By: cmartin- <cmartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 10:45:17 by cmartin-          #+#    #+#             */
-/*   Updated: 2023/02/18 16:22:36 by cmartin-         ###   ########.fr       */
+/*   Updated: 2023/02/22 16:46:44 by cmartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	*ft_philo(void *philos)
 	while (ft_check_death(philo) == 0)
 	{
 		ft_eat(philo);
-		if (ft_check_death(philo))
+		if (ft_check_death(philo) || philo ->data ->nb_philo == 1)
 			return (NULL);
 		pthread_mutex_lock(philo ->print);
 		printf("%lld %d is sleeping\n",
@@ -52,10 +52,10 @@ void	*ft_philo(void *philos)
 		if (ft_check_death(philo))
 			return (NULL);
 		pthread_mutex_lock(philo ->print);
-		printf("%lld %d is thinking\n", //si fait rien
+		printf("%lld %d is thinking\n",
 			ft_get_time_diff(philo ->beggining_time), philo ->id);
 		pthread_mutex_unlock(philo ->print);
-		usleep(100);
+		usleep(500);
 	}
 	return (NULL);
 }

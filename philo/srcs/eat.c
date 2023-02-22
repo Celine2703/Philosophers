@@ -65,7 +65,7 @@ static void	ft_rfork(t_philo *philo)
 
 void	ft_eat(t_philo *philo)
 {
-	if (philo ->id % 2 == 0)
+	if (philo ->id % 2 == 1)
 	{
 		ft_lfork(philo);
 		ft_rfork(philo);
@@ -73,6 +73,8 @@ void	ft_eat(t_philo *philo)
 	else
 	{
 		ft_rfork(philo);
+		if (philo ->data ->nb_philo == 1)
+			return ;
 		ft_lfork(philo);
 	}
 	if (ft_check_death(philo))

@@ -6,7 +6,7 @@
 /*   By: cmartin- <cmartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:42:29 by cmartin-          #+#    #+#             */
-/*   Updated: 2023/02/18 16:24:01 by cmartin-         ###   ########.fr       */
+/*   Updated: 2023/02/22 15:24:04 by cmartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	ft_death(t_philo *philo)
 		i = 0;
 		while(i < philo->data->nb_philo)
 		{
-			if (ft_get_time() - ft_check_meal(&philo[i]) > philo[i].data->time_die)
+			if (ft_get_time() - ft_check_meal(&philo[i]) >= philo[i].data->time_die)
 			{
 				pthread_mutex_lock(philo[i].print);
 				printf("%lld %d died\n", ft_get_time_diff(philo[i].beggining_time), philo[i].id);

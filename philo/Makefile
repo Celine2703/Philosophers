@@ -1,6 +1,7 @@
 SRCS	= 	philo.c\
 			parsing.c\
 			ft_atoi.c\
+			ft_itoa.c\
 			ft_bzero.c\
 			init.c\
 			eat.c\

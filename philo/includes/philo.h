@@ -6,7 +6,7 @@
 /*   By: cmartin- <cmartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 12:00:06 by cmartin-          #+#    #+#             */
-/*   Updated: 2023/02/18 16:07:59 by cmartin-         ###   ########.fr       */
+/*   Updated: 2023/02/22 16:26:21 by cmartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@
 
 typedef struct s_data
 {
-	int	nb_philo;
-	int	time_die;
-	int	time_eat;
-	int	time_sleep;
-	int	nb_meals;
+	int			nb_philo;
+	int			time_die;
+	long long	time_eat;
+	long long	time_sleep;
+	int			nb_meals;
 }	t_data;
 
 typedef struct s_philo
@@ -46,6 +46,7 @@ typedef struct s_philo
 
 //utils
 int			ft_atoi(const char *str);
+char		*ft_itoa(int n);
 void		ft_bzero(void *s, size_t n);
 
 //init
@@ -62,7 +63,7 @@ long long	ft_check_meal(t_philo *philo);
 void		ft_eat(t_philo *philo);
 
 //time
-void		ft_usleep(t_philo *philo, int time);
+void		ft_usleep(t_philo *philo, long long time);
 long long	ft_get_time(void);
 long long	ft_get_time_diff(long long beggining);
 
