@@ -6,7 +6,7 @@
 /*   By: cmartin- <cmartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 10:45:17 by cmartin-          #+#    #+#             */
-/*   Updated: 2023/02/23 16:12:21 by cmartin-         ###   ########.fr       */
+/*   Updated: 2023/02/23 17:10:46 by cmartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ void	*ft_philo(void *philos)
 	t_philo	*philo;
 
 	philo = (t_philo *)philos;
+	if (philo->id % 2 == 0)
+		usleep(500);
 	while (ft_check_death(philo) == 0)
 	{
 		ft_take_fork(philo);
@@ -68,9 +70,12 @@ int	main(int argc, char **argv)
 	philo = NULL;
 	if (ft_parsing(argc, argv, &data))
 		return (1);
-	ft_init_philo(&philo, &data);
-	ft_init_mutex(philo);
-	ft_init_thread(philo);
+	if (ft_init_philo(&philo, &data))
+		return (1);
+	if (ft_init_mutex(philo))
+		return (end_philo(philo), 1);
+	if (ft_init_thread(philo) == 1)
+		return (end_philo(philo), 1);
 	usleep(1000);
 	ft_death(philo);
 	end_philo(philo);

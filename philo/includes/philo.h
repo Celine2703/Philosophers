@@ -6,7 +6,7 @@
 /*   By: cmartin- <cmartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 12:00:06 by cmartin-          #+#    #+#             */
-/*   Updated: 2023/02/23 16:09:58 by cmartin-         ###   ########.fr       */
+/*   Updated: 2023/02/23 16:55:52 by cmartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ char		*ft_itoa(int n);
 void		ft_bzero(void *s, size_t n);
 
 //init
+void		*start_philo(void * philos);
 int			ft_init_philo(t_philo **philo, t_data *data);
 int			ft_init_mutex(t_philo *philo);
 int			ft_init_thread(t_philo *philo);

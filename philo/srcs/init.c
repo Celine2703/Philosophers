@@ -6,11 +6,22 @@
 /*   By: cmartin- <cmartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 15:02:38 by cmartin-          #+#    #+#             */
-/*   Updated: 2023/02/23 15:54:21 by cmartin-         ###   ########.fr       */
+/*   Updated: 2023/02/23 17:05:56 by cmartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void *start_philo(void * philos)
+{
+	t_philo	*philo;
+
+	philo = (t_philo *)philos;
+	pthread_mutex_lock(philo ->print);
+	pthread_mutex_unlock(philo ->print);
+	ft_philo(philo);
+	return (NULL);
+}
 
 int	ft_init_philo(t_philo **philo, t_data *data)
 {
@@ -44,9 +55,12 @@ int	ft_init_mutex(t_philo *philo)
 	pthread_mutex_init(philo ->print, NULL);
 	while (i < philo ->data->nb_philo)
 	{
-		pthread_mutex_init(&(philo ->mutex[i]), NULL);
-		pthread_mutex_init(&(philo[i].dead_mutex), NULL);
-		pthread_mutex_init(&(philo[i].last_meal_mutex), NULL);
+		if (pthread_mutex_init(&(philo ->mutex[i]), NULL))
+			return (1);
+		if (pthread_mutex_init(&(philo[i].dead_mutex), NULL))
+			return (1);
+		if (pthread_mutex_init(&(philo[i].last_meal_mutex), NULL))
+			return (1);
 		philo[i].mutex = philo ->mutex;
 		philo[i].print = philo ->print;
 		philo[i].dead = 0;
@@ -62,13 +76,15 @@ int	ft_init_thread(t_philo *philo)
 
 	i = 0;
 	beggining = ft_get_time();
+	pthread_mutex_lock(philo ->print);
 	while (i < philo ->data->nb_philo)
 	{
 		philo[i].beggining_time = beggining;
 		philo[i].last_meal_time = beggining;
-		if (pthread_create(&(philo[i].thread), NULL, &ft_philo, philo + i))
+		if (pthread_create(&(philo[i].thread), NULL, &start_philo, philo + i))
 			return (1);
 		i++;
 	}
+	pthread_mutex_unlock(philo ->print);
 	return (0);
 }

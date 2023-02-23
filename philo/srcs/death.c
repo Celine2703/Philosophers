@@ -6,7 +6,7 @@
 /*   By: cmartin- <cmartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 15:42:29 by cmartin-          #+#    #+#             */
-/*   Updated: 2023/02/23 16:04:58 by cmartin-         ###   ########.fr       */
+/*   Updated: 2023/02/23 16:40:05 by cmartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@ int	ft_check_death(t_philo *philo)
 
 void	ft_print_death(t_philo *philo, int i)
 {
+	ft_knowing_death(philo);
 	pthread_mutex_lock(philo[i].print);
 	printf("%lld %d died\n",
 		ft_get_time_diff(philo[i].beggining_time), philo[i].id);
 	pthread_mutex_unlock(philo[i].print);
-	ft_knowing_death(philo);
 }
 
 void	ft_knowing_death(t_philo *philo)
