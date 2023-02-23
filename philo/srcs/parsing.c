@@ -6,7 +6,7 @@
 /*   By: cmartin- <cmartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 12:28:05 by cmartin-          #+#    #+#             */
-/*   Updated: 2023/02/22 16:36:14 by cmartin-         ###   ########.fr       */
+/*   Updated: 2023/02/23 16:10:41 by cmartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,6 @@ int	ft_parsing(int argc, char **argv, t_data *data)
 	if (argc == 6)
 		data ->nb_meals = ft_atoi(argv[5]);
 	else
-		data ->nb_meals = 0;
-	// printf("nb_philo: %d\ntime_die: %d\ntime_eat: %lld\ntime_sleep: %lld\n", data ->nb_philo, data ->time_die, data ->time_eat, data ->time_sleep);
-	// printf("ft atoi %d\n", ft_atoi(argv[3]));
+		data ->nb_meals = -1;
 	return (0);
 }

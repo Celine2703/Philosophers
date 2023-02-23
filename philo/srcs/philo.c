@@ -6,7 +6,7 @@
 /*   By: cmartin- <cmartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 10:45:17 by cmartin-          #+#    #+#             */
-/*   Updated: 2023/02/22 16:46:44 by cmartin-         ###   ########.fr       */
+/*   Updated: 2023/02/23 16:12:21 by cmartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	*ft_philo(void *philos)
 	philo = (t_philo *)philos;
 	while (ft_check_death(philo) == 0)
 	{
-		ft_eat(philo);
+		ft_take_fork(philo);
 		if (ft_check_death(philo) || philo ->data ->nb_philo == 1)
 			return (NULL);
 		pthread_mutex_lock(philo ->print);
@@ -62,8 +62,8 @@ void	*ft_philo(void *philos)
 
 int	main(int argc, char **argv)
 {
-	t_data data;
-	t_philo *philo;
+	t_data	data;
+	t_philo	*philo;
 
 	philo = NULL;
 	if (ft_parsing(argc, argv, &data))
@@ -73,14 +73,6 @@ int	main(int argc, char **argv)
 	ft_init_thread(philo);
 	usleep(1000);
 	ft_death(philo);
-	
-	//le programme se fait en 3 parties
-	
-	//on verifie que last meal + time to die est inferieur a time actuel
-	
-	//2. boucle de vie des philo
-	
 	end_philo(philo);
-	//pthread_join(thread, NULL);
 	return (0);
 }

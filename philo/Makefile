@@ -4,6 +4,7 @@ SRCS	= 	philo.c\
 			ft_itoa.c\
 			ft_bzero.c\
 			init.c\
+			fork.c\
 			eat.c\
 			time.c\
 			death.c\

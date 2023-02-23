@@ -6,7 +6,7 @@
 /*   By: cmartin- <cmartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 15:02:38 by cmartin-          #+#    #+#             */
-/*   Updated: 2023/02/18 16:19:38 by cmartin-         ###   ########.fr       */
+/*   Updated: 2023/02/23 15:54:21 by cmartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	ft_init_mutex(t_philo *philo)
 
 int	ft_init_thread(t_philo *philo)
 {
-	int	i;
+	int			i;
 	long long	beggining;
 
 	i = 0;
