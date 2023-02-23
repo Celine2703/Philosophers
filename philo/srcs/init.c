@@ -6,13 +6,13 @@
 /*   By: cmartin- <cmartin-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 15:02:38 by cmartin-          #+#    #+#             */
-/*   Updated: 2023/02/23 17:05:56 by cmartin-         ###   ########.fr       */
+/*   Updated: 2023/02/23 17:12:51 by cmartin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void *start_philo(void * philos)
+void	*start_philo(void *philos)
 {
 	t_philo	*philo;
 
